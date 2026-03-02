@@ -84,7 +84,7 @@ All code is licensed under [MIT](LICENSE-CODE). By contributing code, you agree 
 ### Code Style
 
 - TypeScript for all code
-- ESLint + Prettier for formatting (runs automatically via pre-commit hook)
+- ESLint for linting
 - Follow existing patterns in the codebase
 
 ## Questions?

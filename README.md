@@ -1,13 +1,8 @@
-# Lykky
+# Lykky — Open-Source GTM Toolkit for Nordic Founders
 
-The open-source GTM toolkit for Nordic founders.
+## What is Lykky?
 
-Lykky is two things:
-
-1. **An open-source GTM knowledge base** — frameworks, templates, playbooks, and case studies for taking your product to market
-2. **An interactive GTM platform** — wizard-driven tools that turn that knowledge into action
-
-Built by founders in Oulu, Finland. Open to contributions from anywhere.
+Lykky is an open-source go-to-market knowledge base built for Nordic startup founders. It provides frameworks, playbooks, templates, resources, and case studies to help you take your product to market — with a focus on the Nordics and EU ecosystem.
 
 ## Quick Start
 
@@ -18,61 +13,25 @@ pnpm install
 pnpm dev
 ```
 
-Requires Node.js 22+ and pnpm.
+Open [http://localhost:3000](http://localhost:3000). Requires Node.js 22+ and pnpm.
 
 ## Project Structure
 
-```
-lykky/
-├── content/            # The open-source knowledge base (CC BY-SA 4.0)
-│   ├── frameworks/     # Core GTM methodology
-│   ├── playbooks/      # Region-specific guides (Oulu, Finland, Nordics, EU)
-│   ├── case-studies/   # Real founder stories
-│   ├── templates/      # Downloadable/interactive templates
-│   └── resources/      # Curated tools, funding, communities
-├── src/
-│   ├── app/            # Next.js App Router
-│   ├── components/     # UI and content components
-│   ├── lib/            # Utilities and integrations
-│   ├── hooks/          # React hooks
-│   └── types/          # TypeScript types
-└── public/             # Static assets
-```
+| Directory | Description |
+|-----------|-------------|
+| `content/` | MDX content — frameworks, playbooks, templates, resources, case studies |
+| `src/app/` | Next.js App Router pages |
+| `src/components/` | React components |
 
-## Stack
+## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | Next.js 15 (App Router) |
-| Content | MDX + contentlayer2 |
-| Styling | Tailwind CSS + shadcn/ui |
-| Search | Pagefind |
-| Hosting | Vercel |
-| CI/CD | GitHub Actions |
+Next.js 16, Velite, Tailwind CSS v4, shadcn/ui, React Three Fiber, Pagefind
 
 ## Contributing
 
-We welcome contributions from founders, marketers, and developers. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on contributing code and content.
 
-**Non-technical?** You can contribute content through our [web form](https://lykky.co/contribute) or by [opening an issue](https://github.com/lykky-co/lykky/issues/new/choose).
+## License
 
-**Developer?** Fork the repo, create a feature branch, and open a PR. See the contributing guide for branch naming and commit conventions.
-
-## Customize for Your Region
-
-Lykky is built to be forked and adapted:
-
-1. Fork this repo
-2. Add your playbooks in `content/playbooks/your-region/`
-3. Deploy to Vercel (free)
-
-## Licenses
-
-- **Code** is licensed under [MIT](LICENSE-CODE)
-- **Content** (everything in `/content`) is licensed under [CC BY-SA 4.0](LICENSE-CONTENT)
-
-## Links
-
-- [Content Policy](CONTENT_POLICY.md)
-- [Code of Conduct](CODE_OF_CONDUCT.md)
-- [Security Policy](SECURITY.md)
+- **Code** — [MIT](LICENSE-CODE)
+- **Content** (`/content`) — [CC BY-SA 4.0](LICENSE-CONTENT)

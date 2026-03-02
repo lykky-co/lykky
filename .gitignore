@@ -1,6 +1,13 @@
 # dependencies
 node_modules/
 .pnpm-store/
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
 # next.js
 .next/
@@ -10,10 +17,12 @@ out/
 dist/
 build/
 
+# testing
+/coverage
+
 # env
 .env
 .env.*
-!.env.example
 
 # editor
 .vscode/*
@@ -35,17 +44,21 @@ pnpm-debug.log*
 
 # typescript
 *.tsbuildinfo
+next-env.d.ts
 
 # vercel
 .vercel
 
-# contentlayer
-.contentlayer
+# velite
+.velite
 
 # pagefind
 public/pagefind/
 
 # turbo
 .turbo
+
+# misc
+*.pem
 /docs
 Lykky_Technical_Architecture_v2.md
