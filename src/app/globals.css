@@ -1,0 +1,171 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --font-sans: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Cormorant Garamond', ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/*
+ * Lykky dark-first theme
+ *
+ * Brand colors (from landing-init/style.css):
+ *   Background:   #050508  -> oklch(0.071 0.005 285)
+ *   Foreground:    #e8e4df  -> oklch(0.912 0.01 75)
+ *   Primary:       #7eb8a2  -> oklch(0.714 0.07 166)
+ *   Dim green:     rgba(126, 184, 162, 0.35)
+ *   Corner lines:  rgba(126, 184, 162, 0.12)
+ *
+ * Dark is the ONLY theme. :root sets the dark values directly.
+ * .dark class is kept for next-themes compatibility.
+ */
+:root {
+  --radius: 0.625rem;
+  --background: oklch(0.071 0.005 285);
+  --foreground: oklch(0.912 0.01 75);
+  --card: oklch(0.1 0.005 285);
+  --card-foreground: oklch(0.912 0.01 75);
+  --popover: oklch(0.1 0.005 285);
+  --popover-foreground: oklch(0.912 0.01 75);
+  --primary: oklch(0.714 0.07 166);
+  --primary-foreground: oklch(0.071 0.005 285);
+  --secondary: oklch(0.16 0.005 285);
+  --secondary-foreground: oklch(0.912 0.01 75);
+  --muted: oklch(0.16 0.005 285);
+  --muted-foreground: oklch(0.65 0.01 75);
+  --accent: oklch(0.714 0.07 166);
+  --accent-foreground: oklch(0.071 0.005 285);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(0.714 0.07 166 / 12%);
+  --input: oklch(0.714 0.07 166 / 15%);
+  --ring: oklch(0.714 0.07 166 / 35%);
+  --chart-1: oklch(0.714 0.07 166);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.085 0.005 285);
+  --sidebar-foreground: oklch(0.912 0.01 75);
+  --sidebar-primary: oklch(0.714 0.07 166);
+  --sidebar-primary-foreground: oklch(0.071 0.005 285);
+  --sidebar-accent: oklch(0.16 0.005 285);
+  --sidebar-accent-foreground: oklch(0.912 0.01 75);
+  --sidebar-border: oklch(0.714 0.07 166 / 12%);
+  --sidebar-ring: oklch(0.714 0.07 166 / 35%);
+}
+
+.dark {
+  --background: oklch(0.071 0.005 285);
+  --foreground: oklch(0.912 0.01 75);
+  --card: oklch(0.1 0.005 285);
+  --card-foreground: oklch(0.912 0.01 75);
+  --popover: oklch(0.1 0.005 285);
+  --popover-foreground: oklch(0.912 0.01 75);
+  --primary: oklch(0.714 0.07 166);
+  --primary-foreground: oklch(0.071 0.005 285);
+  --secondary: oklch(0.16 0.005 285);
+  --secondary-foreground: oklch(0.912 0.01 75);
+  --muted: oklch(0.16 0.005 285);
+  --muted-foreground: oklch(0.65 0.01 75);
+  --accent: oklch(0.714 0.07 166);
+  --accent-foreground: oklch(0.071 0.005 285);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(0.714 0.07 166 / 12%);
+  --input: oklch(0.714 0.07 166 / 15%);
+  --ring: oklch(0.714 0.07 166 / 35%);
+  --chart-1: oklch(0.714 0.07 166);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.085 0.005 285);
+  --sidebar-foreground: oklch(0.912 0.01 75);
+  --sidebar-primary: oklch(0.714 0.07 166);
+  --sidebar-primary-foreground: oklch(0.071 0.005 285);
+  --sidebar-accent: oklch(0.16 0.005 285);
+  --sidebar-accent-foreground: oklch(0.912 0.01 75);
+  --sidebar-border: oklch(0.714 0.07 166 / 12%);
+  --sidebar-ring: oklch(0.714 0.07 166 / 35%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ============================================================
+   Landing page animations
+   ============================================================ */
+
+/* Film grain animation */
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -15%); }
+  40% { transform: translate(-5%, 15%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 10%); }
+  80% { transform: translate(3%, -15%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+/* Signal dot pulse */
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.75); }
+}
+
+/* Content and corner fade-in */
+@keyframes fadeIn {
+  to { opacity: 1; }
+}

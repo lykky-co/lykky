@@ -1,12 +1,12 @@
-// ============================================================
-// Lykky.co — "Aurora Shader" — Three.js Scene
-// ============================================================
+'use client'
 
-import * as THREE from 'three';
+import { useRef, useEffect, useMemo } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
+import * as THREE from 'three'
 
-// ------------------------------------------------------------
+// ============================================================
 // GLSL: Simplex 3D Noise (Stefan Gustavson)
-// ------------------------------------------------------------
+// ============================================================
 const simplexNoise = /* glsl */ `
 //
 // Description : Array and textureless GLSL 2D/3D/4D simplex
@@ -89,12 +89,12 @@ float snoise(vec3 v) {
   m = m * m;
   return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
 }
-`;
+`
 
-// ------------------------------------------------------------
-// Vertex Shader
-// ------------------------------------------------------------
-const vertexShader = /* glsl */ `
+// ============================================================
+// Aurora Vertex Shader
+// ============================================================
+const auroraVertexShader = /* glsl */ `
 ${simplexNoise}
 
 uniform float uTime;
@@ -127,12 +127,12 @@ void main() {
 
   gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
 }
-`;
+`
 
-// ------------------------------------------------------------
-// Fragment Shader
-// ------------------------------------------------------------
-const fragmentShader = /* glsl */ `
+// ============================================================
+// Aurora Fragment Shader
+// ============================================================
+const auroraFragmentShader = /* glsl */ `
 ${simplexNoise}
 
 uniform float uTime;
@@ -261,174 +261,245 @@ void main() {
 
   gl_FragColor = vec4(finalColor, uOpacity);
 }
-`;
+`
 
-// ------------------------------------------------------------
-// Scene Setup
-// ------------------------------------------------------------
-const container = document.getElementById('canvas-container');
+// ============================================================
+// Wireframe Vertex Shader
+// ============================================================
+const wireVertexShader = /* glsl */ `
+${simplexNoise}
 
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x050508);
+uniform float uTime;
+uniform vec2  uMouse;
 
-const camera = new THREE.PerspectiveCamera(
-  45,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  100
-);
-camera.position.z = 5;
+varying vec3 vPos;
 
-const renderer = new THREE.WebGLRenderer({
-  antialias: true,
-  alpha: false,
-});
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-container.appendChild(renderer.domElement);
+void main() {
+  float speed = uTime * 0.15;
+  float mouseInfluence = uMouse.x * 0.3 + uMouse.y * 0.2;
+  float noise1 = snoise(position * 0.8 + vec3(speed, speed * 0.7, mouseInfluence));
+  float noise2 = snoise(position * 1.6 + vec3(speed * 1.3, -speed * 0.5, mouseInfluence * 0.5));
+  float displacement = noise1 * 0.12 + noise2 * 0.05;
+  vec3 newPosition = position + normal * displacement;
+  vPos = newPosition;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
+}
+`
 
-// ------------------------------------------------------------
-// Aurora Icosahedron
-// ------------------------------------------------------------
-const geometry = new THREE.IcosahedronGeometry(1.6, 5); // detail level 5 for smooth displacement
+// ============================================================
+// Wireframe Fragment Shader
+// ============================================================
+const wireFragmentShader = /* glsl */ `
+uniform float uOpacity;
+varying vec3 vPos;
 
-const uniforms = {
-  uTime: { value: 0.0 },
-  uMouse: { value: new THREE.Vector2(0.0, 0.0) },
-  uOpacity: { value: 0.0 }, // starts transparent for fade-in
-};
+void main() {
+  // Faint green wireframe
+  gl_FragColor = vec4(0.494, 0.722, 0.635, uOpacity * 0.08);
+}
+`
 
-const material = new THREE.ShaderMaterial({
-  vertexShader,
-  fragmentShader,
-  uniforms,
-  transparent: true,
-  side: THREE.DoubleSide,
-  wireframe: false,
-});
+// ============================================================
+// Shared state refs for mouse tracking across components
+// ============================================================
+const targetMouse = { x: 0, y: 0 }
+const smoothMouse = { x: 0, y: 0 }
 
-const mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);
-
-// --- Wireframe overlay for constellation/network feel ---
-const wireGeometry = new THREE.IcosahedronGeometry(1.62, 2); // lower detail for visible wireframe
-const wireMaterial = new THREE.ShaderMaterial({
-  vertexShader: /* glsl */ `
-    ${simplexNoise}
-
-    uniform float uTime;
-    uniform vec2  uMouse;
-
-    varying vec3 vPos;
-
-    void main() {
-      float speed = uTime * 0.15;
-      float mouseInfluence = uMouse.x * 0.3 + uMouse.y * 0.2;
-      float noise1 = snoise(position * 0.8 + vec3(speed, speed * 0.7, mouseInfluence));
-      float noise2 = snoise(position * 1.6 + vec3(speed * 1.3, -speed * 0.5, mouseInfluence * 0.5));
-      float displacement = noise1 * 0.12 + noise2 * 0.05;
-      vec3 newPosition = position + normal * displacement;
-      vPos = newPosition;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
+// ============================================================
+// MouseTracker — window-level pointer tracking
+// ============================================================
+function MouseTracker() {
+  useEffect(() => {
+    function onPointerMove(e: PointerEvent) {
+      targetMouse.x = (e.clientX / window.innerWidth) * 2 - 1
+      targetMouse.y = -(e.clientY / window.innerHeight) * 2 + 1
     }
-  `,
-  fragmentShader: /* glsl */ `
-    uniform float uOpacity;
-    varying vec3 vPos;
 
-    void main() {
-      // Faint green wireframe
-      gl_FragColor = vec4(0.494, 0.722, 0.635, uOpacity * 0.08);
+    function onTouchMove(e: TouchEvent) {
+      if (e.touches.length > 0) {
+        targetMouse.x = (e.touches[0].clientX / window.innerWidth) * 2 - 1
+        targetMouse.y = -(e.touches[0].clientY / window.innerHeight) * 2 + 1
+      }
     }
-  `,
-  uniforms,
-  transparent: true,
-  wireframe: true,
-  depthWrite: false,
-});
 
-const wireMesh = new THREE.Mesh(wireGeometry, wireMaterial);
-scene.add(wireMesh);
+    window.addEventListener('pointermove', onPointerMove, { passive: true })
+    window.addEventListener('touchmove', onTouchMove, { passive: true })
 
-// ------------------------------------------------------------
-// Mouse Tracking
-// ------------------------------------------------------------
-const mouse = { x: 0, y: 0 };
-const targetMouse = { x: 0, y: 0 };
+    return () => {
+      window.removeEventListener('pointermove', onPointerMove)
+      window.removeEventListener('touchmove', onTouchMove)
+    }
+  }, [])
 
-function onMouseMove(e) {
-  targetMouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-  targetMouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  return null
 }
 
-function onTouchMove(e) {
-  if (e.touches.length > 0) {
-    targetMouse.x = (e.touches[0].clientX / window.innerWidth) * 2 - 1;
-    targetMouse.y = -(e.touches[0].clientY / window.innerHeight) * 2 + 1;
-  }
+// ============================================================
+// MouseSmoother — lerp smooth mouse toward target each frame
+// ============================================================
+function MouseSmoother() {
+  useFrame(() => {
+    const lerpSpeed = 0.04
+    smoothMouse.x += (targetMouse.x - smoothMouse.x) * lerpSpeed
+    smoothMouse.y += (targetMouse.y - smoothMouse.y) * lerpSpeed
+  })
+
+  return null
 }
 
-window.addEventListener('mousemove', onMouseMove, { passive: true });
-window.addEventListener('touchmove', onTouchMove, { passive: true });
-
-// ------------------------------------------------------------
-// Responsive Resize
-// ------------------------------------------------------------
-function onResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+// ============================================================
+// Detect mobile (for disabling mouse parallax)
+// ============================================================
+function getIsMobile() {
+  if (typeof window === 'undefined') return false
+  return (
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    ) || window.innerWidth < 768
+  )
 }
 
-window.addEventListener('resize', onResize);
+// ============================================================
+// AuroraIcosahedron — solid mesh with aurora shaders
+// ============================================================
+function AuroraIcosahedron() {
+  const meshRef = useRef<THREE.Mesh>(null)
+  const materialRef = useRef<THREE.ShaderMaterial>(null)
+  const isMobile = useRef(false)
 
-// ------------------------------------------------------------
-// Detect Mobile
-// ------------------------------------------------------------
-const isMobile =
-  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  ) || window.innerWidth < 768;
+  const uniforms = useMemo(
+    () => ({
+      uTime: { value: 0.0 },
+      uMouse: { value: new THREE.Vector2(0.0, 0.0) },
+      uOpacity: { value: 0.0 },
+    }),
+    []
+  )
 
-// ------------------------------------------------------------
-// Animation Loop
-// ------------------------------------------------------------
-const clock = new THREE.Clock();
+  useEffect(() => {
+    isMobile.current = getIsMobile()
+  }, [])
 
-function animate() {
-  requestAnimationFrame(animate);
+  useFrame((state) => {
+    const elapsed = state.clock.getElapsedTime()
 
-  const elapsed = clock.getElapsedTime();
-  uniforms.uTime.value = elapsed;
+    // Update uniforms
+    uniforms.uTime.value = elapsed
+    uniforms.uMouse.value.set(smoothMouse.x, smoothMouse.y)
 
-  // Smooth mouse interpolation
-  const lerpSpeed = 0.04;
-  mouse.x += (targetMouse.x - mouse.x) * lerpSpeed;
-  mouse.y += (targetMouse.y - mouse.y) * lerpSpeed;
-  uniforms.uMouse.value.set(mouse.x, mouse.y);
+    // Fade in over first 2 seconds
+    if (uniforms.uOpacity.value < 1.0) {
+      uniforms.uOpacity.value = Math.min(1.0, elapsed * 0.5)
+    }
 
-  // Fade in the geometry over the first 2 seconds
-  if (uniforms.uOpacity.value < 1.0) {
-    uniforms.uOpacity.value = Math.min(1.0, elapsed * 0.5);
-  }
+    // Rotation
+    if (meshRef.current) {
+      const baseRotationSpeed = 0.06
+      meshRef.current.rotation.y = elapsed * baseRotationSpeed
+      meshRef.current.rotation.x = Math.sin(elapsed * 0.04) * 0.15
 
-  // Slow rotation
-  const baseRotationSpeed = 0.06;
-  mesh.rotation.y = elapsed * baseRotationSpeed;
-  mesh.rotation.x = Math.sin(elapsed * 0.04) * 0.15;
-  wireMesh.rotation.y = mesh.rotation.y;
-  wireMesh.rotation.x = mesh.rotation.x;
+      // Mouse parallax (not on mobile)
+      if (!isMobile.current) {
+        meshRef.current.rotation.y += smoothMouse.x * 0.15
+        meshRef.current.rotation.x += smoothMouse.y * 0.1
+      }
+    }
+  })
 
-  // Mouse parallax (gentler on mobile, auto-rotate dominant)
-  if (!isMobile) {
-    mesh.rotation.y += mouse.x * 0.15;
-    mesh.rotation.x += mouse.y * 0.1;
-    wireMesh.rotation.y = mesh.rotation.y;
-    wireMesh.rotation.x = mesh.rotation.x;
-  }
-
-  renderer.render(scene, camera);
+  return (
+    <mesh ref={meshRef}>
+      <icosahedronGeometry args={[1.6, 5]} />
+      <shaderMaterial
+        ref={materialRef}
+        vertexShader={auroraVertexShader}
+        fragmentShader={auroraFragmentShader}
+        uniforms={uniforms}
+        transparent={true}
+        side={THREE.DoubleSide}
+        wireframe={false}
+      />
+    </mesh>
+  )
 }
 
-animate();
+// ============================================================
+// WireframeOverlay — wireframe mesh on top
+// ============================================================
+function WireframeOverlay() {
+  const meshRef = useRef<THREE.Mesh>(null)
+  const isMobile = useRef(false)
+
+  const uniforms = useMemo(
+    () => ({
+      uTime: { value: 0.0 },
+      uMouse: { value: new THREE.Vector2(0.0, 0.0) },
+      uOpacity: { value: 0.0 },
+    }),
+    []
+  )
+
+  useEffect(() => {
+    isMobile.current = getIsMobile()
+  }, [])
+
+  useFrame((state) => {
+    const elapsed = state.clock.getElapsedTime()
+
+    // Update uniforms
+    uniforms.uTime.value = elapsed
+    uniforms.uMouse.value.set(smoothMouse.x, smoothMouse.y)
+
+    // Fade in over first 2 seconds
+    if (uniforms.uOpacity.value < 1.0) {
+      uniforms.uOpacity.value = Math.min(1.0, elapsed * 0.5)
+    }
+
+    // Match rotation with aurora mesh
+    if (meshRef.current) {
+      const baseRotationSpeed = 0.06
+      meshRef.current.rotation.y = elapsed * baseRotationSpeed
+      meshRef.current.rotation.x = Math.sin(elapsed * 0.04) * 0.15
+
+      if (!isMobile.current) {
+        meshRef.current.rotation.y += smoothMouse.x * 0.15
+        meshRef.current.rotation.x += smoothMouse.y * 0.1
+      }
+    }
+  })
+
+  return (
+    <mesh ref={meshRef}>
+      <icosahedronGeometry args={[1.62, 2]} />
+      <shaderMaterial
+        vertexShader={wireVertexShader}
+        fragmentShader={wireFragmentShader}
+        uniforms={uniforms}
+        transparent={true}
+        wireframe={true}
+        depthWrite={false}
+      />
+    </mesh>
+  )
+}
+
+// ============================================================
+// AuroraScene — Canvas containing all components
+// ============================================================
+export default function AuroraScene() {
+  return (
+    <div className="fixed inset-0 z-0">
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 45, near: 0.1, far: 100 }}
+        dpr={[1, 2]}
+        gl={{ antialias: true, alpha: false }}
+        style={{ background: '#050508' }}
+      >
+        <color attach="background" args={['#050508']} />
+        <MouseTracker />
+        <MouseSmoother />
+        <AuroraIcosahedron />
+        <WireframeOverlay />
+      </Canvas>
+    </div>
+  )
+}
