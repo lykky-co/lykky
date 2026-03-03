@@ -8,7 +8,7 @@
     "postbuild": "pagefind --site .next/server/app --output-path public/pagefind --glob '**/*.html'",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "velite && tsc --noEmit"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

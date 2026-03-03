@@ -1,11 +1,12 @@
 'use client'
 
+import { useMemo } from 'react'
 import * as runtime from 'react/jsx-runtime'
 import { Callout } from './callout'
 import { StepByStep, Step } from './step-by-step'
 
-function useMDXComponent(code: string) {
-  // Standard MDX hydration pattern — code comes from Velite build-time compilation of trusted content
+// Velite build-time MDX hydration — code is trusted, compiled at build time
+function getMDXComponent(code: string) {
   const fn = new Function(code)
   return fn({ ...runtime }).default
 }
@@ -17,7 +18,7 @@ const components = {
 }
 
 export function MDXContent({ code }: { code: string }) {
-  const Component = useMDXComponent(code)
+  const Component = useMemo(() => getMDXComponent(code), [code])
   return (
     <div className="prose prose-invert prose-green max-w-none">
       <Component components={components} />
