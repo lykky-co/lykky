@@ -6,8 +6,7 @@ export function Hero() {
     <main className="pointer-events-none fixed inset-0 z-15 flex select-none flex-col items-center justify-center animate-[fadeIn_2s_ease-out_0.4s_forwards] opacity-0">
       {/* Logo */}
       <h1
-        className="font-serif text-[clamp(3rem,8vw,7rem)] font-light italic leading-none tracking-[0.02em] text-[#e8e4df] mix-blend-difference mb-5 sm:mb-5"
-        style={{ fontSize: 'clamp(2.2rem, 8vw, 7rem)' }}
+        className="font-serif text-[clamp(2.2rem,8vw,7rem)] font-light italic leading-none tracking-[0.02em] text-[#e8e4df] mix-blend-difference mb-5 sm:mb-5"
       >
         Lykky
       </h1>

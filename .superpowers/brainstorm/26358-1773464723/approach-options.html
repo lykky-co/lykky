@@ -1,0 +1,40 @@
+<h2>How should we render the ecosystem map?</h2>
+<p class="subtitle">Each approach groups organizations by function (Funding, Programs, Workspaces, etc.) as a network diagram. Pick the one that feels right for the site.</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>SVG Node Map (Static + Hover)</h3>
+      <p>Hand-crafted SVG layout with nodes grouped in clusters by category. Hover reveals details. No external libraries. Lightweight, fast, works everywhere. Think: a clean infographic-style map.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Zero dependencies</li><li>Fast load, accessible</li><li>Full design control</li><li>Matches dark theme easily</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Layout is manual — adding nodes means repositioning</li><li>Not draggable/zoomable without extra work</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>D3.js Force-Directed Graph</h3>
+      <p>Physics-based layout where nodes repel and category links pull them together. Interactive — drag nodes, zoom, pan. Nodes cluster naturally by function. Classic network visualization.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Auto-layout — adding nodes just works</li><li>Interactive (drag, zoom, pan)</li><li>Visually dynamic</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>~50KB dependency (d3-force)</li><li>Physics can feel jittery</li><li>Harder to make look polished</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>CSS Grid Cluster Map</h3>
+      <p>Pure HTML/CSS — each category is a visual cluster (card group) with nodes inside. Lines drawn with SVG overlay connecting related orgs. Clean, readable, responsive. More like an interactive org chart than a traditional network graph.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Zero dependencies</li><li>Fully responsive</li><li>Most readable / accessible</li><li>Easy to maintain — just edit data</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Less "map-like", more structured</li><li>Connection lines between clusters are tricky on resize</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>
