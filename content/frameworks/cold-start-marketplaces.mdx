@@ -1,0 +1,229 @@
+---
+title: "Solving the Cold-Start Problem in Marketplaces"
+slug: cold-start-marketplaces
+description: "A practical playbook for getting a two-sided marketplace off zero — atomic networks, supply-first sequencing, liquidity as the north star, and the marketing tactics that actually compound."
+order: 2
+tags:
+  - marketplaces
+  - cold-start
+  - network-effects
+  - liquidity
+  - gtm
+  - marketing
+author: Risto Holappa
+lastUpdated: "2026-04-28"
+---
+
+# Solving the Cold-Start Problem in Marketplaces
+
+I'll be blunt: most marketplaces die in the first six months — not because the idea is wrong, but because the founders try to launch the whole map at once. A marketplace is not a product launch. It's a network launch, and networks have a tipping point you have to engineer your way to.
+
+This playbook covers how to get from zero to a working two-sided marketplace: how to choose your atomic network, which side to seed first, how to measure liquidity (not GMV), and the marketing moves that actually compound when you have no users on either side.
+
+---
+
+## What the Cold-Start Problem Actually Is
+
+A marketplace has no value when one side is empty. Buyers leave because there's nothing to buy. Sellers leave because there's no one buying. The classic chicken-and-egg.
+
+The mistake is treating it as a chicken-and-egg problem at all. Andrew Chen's framing in *The Cold Start Problem* is more useful: marketplaces don't grow by adding users globally. They grow by stitching together small, dense networks — **atomic networks** — that work end-to-end on day one, then replicating them.
+
+A working atomic network has three properties:
+
+- **Self-sustaining** — buyers find what they want, sellers get enough demand to come back
+- **Small enough to saturate** — you can realistically reach most of the supply or demand in it
+- **Replicable** — what worked here will work in the next one with adjustments, not reinvention
+
+If your "launch" needs the whole country to show up to feel useful, you don't have an atomic network. You have a brochure.
+
+> **From the field:** *Every marketplace I've watched fail launched citywide or nationally on day one. Every one I've watched work picked one neighborhood, one category, one weekday — and got that single combination to feel busy before expanding.*
+
+---
+
+## Step 1: Define Your Atomic Network
+
+Pick the smallest unit that can stand alone. Most founders pick something 10× too big.
+
+A good atomic network is usually defined on three axes:
+
+| Axis | Too big | Atomic |
+|------|---------|--------|
+| **Geography** | "Finland" | One city + 30km radius |
+| **Category** | "Local food" | "Fish and berries in season" |
+| **Time** | "Always available" | "Pickup window Thu 16–19" |
+
+Tighten until a single buyer in the network has ≥10 real options and a single seller has ≥10 real buyers within reach. That's the bar. If you can't honestly say that on a whiteboard, the network is too sparse.
+
+> We will launch in **[geography]** for **[category]** during **[time window]**, where there are at least **[N supply]** active sellers and **[M demand]** active buyers reachable through **[channel]**.
+
+This is your nucleus. Everything else — marketing spend, content, hiring — gets pointed at making this one nucleus liquid before you talk about market #2.
+
+> **From the field:** *The temptation to "also launch" the next city, the next category, the adjacent use case is enormous. It always comes from a board deck or an investor question, not from real demand. Resist it until liquidity in the first network is boring.*
+
+---
+
+## Step 2: Pick the Hard Side First
+
+Both sides are not equally hard to acquire. One side — the **hard side** — has more options elsewhere, higher switching cost, or lower native motivation. That's the side you build for first.
+
+| Marketplace | Easy side | Hard side |
+|-------------|-----------|-----------|
+| Uber | Riders | Drivers |
+| Airbnb | Guests | Hosts |
+| OnlyFans | Fans | Creators |
+| Local food marketplace | Buyers | Producers |
+| B2B services marketplace | Buyers | Vetted suppliers |
+
+The hard side is almost always supply. Buyers can be summoned with paid ads in a weekend. Supply has to be recruited, onboarded, trained, and given a reason to keep showing up when there's no demand yet.
+
+**Rule:** if your hard side isn't ready for a buyer to land on the page, do not spend a euro on demand marketing. You're paying to disappoint people.
+
+For most consumer marketplaces this means a **supply-first sequence**:
+
+1. Recruit supply manually (calls, visits, founder-led outreach)
+2. Onboard until your atomic network looks dense to a first-time buyer
+3. Only then turn on demand acquisition
+4. Use the first demand to keep supply engaged ("you got 3 orders this week")
+
+> **From the field:** *Founders underestimate how much hand-holding the first 20 sellers need. This is not a self-serve problem. Sit in their office, fill in their first listing with them, take them out for coffee when they get their first sale. Door-to-door is not a failure mode — it's the job.*
+
+---
+
+## Step 3: Measure Liquidity, Not GMV
+
+GMV is a vanity metric in cold-start. You can fake it with subsidies, friends, and one whale customer. It tells you nothing about whether the network actually works.
+
+The honest north star for a young marketplace is **liquidity** — the share of listings that turn into transactions inside a meaningful window.
+
+> **Liquidity ratio** = transactions ÷ active listings, measured over a fixed window (often 7 or 14 days).
+
+A few rules of thumb:
+
+| Ratio | Reading |
+|-------|---------|
+| < 20% | Sellers are starting to churn. You have a demand problem or a discoverability problem. |
+| 30–50% | Working but fragile. Watch repeat behavior on both sides. |
+| ≥ 50% | Healthy. Now you can think about the next nucleus. |
+
+Pair it with two supporting metrics:
+
+- **Time to first transaction** (TTFT) — how long from a seller's first listing to their first sale. Above 14 days, most sellers churn before they experience the value.
+- **Repeat rate within 30 days** — both sides. Anyone who only ever transacts once is essentially a paid acquisition cost, not a network member.
+
+Track these per atomic network, not globally. A single liquid nucleus is worth more than five sparse ones.
+
+> **From the field:** *Reporting GMV to your team weekly will quietly kill your culture. People start optimizing for the number — discounts, one-off whale deals, listing inflation. Reporting liquidity changes the conversation to "did the network work this week."*
+
+---
+
+## Step 4: Marketing the Supply Side
+
+Supply-side marketing is not advertising. It's recruiting.
+
+The channels that actually work for the hard side:
+
+- **Founder-led outreach** — direct calls, LinkedIn DMs, in-person visits. Nothing else converts at this stage.
+- **Industry communities** — guilds, associations, Facebook groups, niche Slacks. Find where your supply already gathers.
+- **Existing aggregators** — your future supply is already on someone's list. Producer co-ops, regional registries, local chambers, trade shows.
+- **Referral within the side** — once you have 5 happy sellers, ask each for 3 names. Compounds faster than any ad spend.
+- **Done-for-you onboarding** — the marketing message is "we set it up for you," not "sign up here."
+
+Avoid until you have product-market-network fit:
+
+- Paid ads targeting suppliers (CPCs are fine, conversions are terrible — they don't make decisions on impulse)
+- Content marketing aimed at suppliers (they don't read; they ask peers)
+- Generic press releases about "launching the platform"
+
+#### GenAI Prompt: Supply Recruitment List
+
+```
+I am building a marketplace for [category] in [geography].
+My target supply profile: [size, role, signals of fit].
+
+1. List 20 communities, associations, registries, and trade events
+   where this supply gathers — online and offline.
+2. For each, suggest the highest-leverage way to make first contact
+   (cold call, intro, sponsorship, attendance, content).
+3. Draft 3 short outreach messages tuned for this audience —
+   one cold, one warm intro, one peer-referral.
+4. Flag any community where outreach would be culturally
+   inappropriate (closed group, members-only, paid).
+```
+
+> **From the field:** *The first 20 sellers should know the founder's mobile number. The next 200 should know the head of operations. The 2,000 after that can self-serve. If you flip this order, your churn graph will tell you immediately.*
+
+---
+
+## Step 5: Marketing the Demand Side
+
+Once supply is dense enough that a stranger landing on the site can find ≥10 things they actually want, you can spend on demand. Not before.
+
+The channels that work, roughly in order of compounding effect:
+
+- **SEO around buying intent** — "[category] near me", "buy [thing] from [region]", long-tail queries about specific suppliers or sub-categories. This is the asset that pays you back for years.
+- **Local content with strong characters** — interviews, behind-the-scenes, "meet the maker" stories. Your supply is your most distinctive content. Use it.
+- **Curated email** — a weekly digest of what's available right now in the nucleus. Easy to build, hard to copy, drives repeat.
+- **Partnerships** — local media, complementary brands, community organizations. One good partnership beats three months of ads.
+- **Paid social** — for filling specific gaps (a category with weak organic, a launch event). Treat it as tactical, not strategic. CACs only make sense if your repeat rate justifies them.
+- **Referral** — works once buyers have a real moment of delight. Don't bolt it on at signup; bolt it on right after their first successful transaction.
+
+#### GenAI Prompt: Demand Channel Plan
+
+```
+I run a marketplace for [category] in [geography].
+Atomic network: [supply density, time window, geography].
+North-star metric: liquidity ratio, currently [X%].
+
+1. Rank 8 demand channels for this stage by expected payback
+   (account for cold-start, not steady state).
+2. For each, define one leading indicator I can read in the
+   first 14 days — not just CAC or conversions.
+3. Flag channels that should be off-limits until liquidity
+   passes 50%, and explain why.
+4. Suggest one weekly content cadence using the supply itself
+   as the protagonist.
+```
+
+> **From the field:** *The single highest-leverage marketing decision in a young marketplace is putting the supply on camera — literally. Faces, names, kitchens, workshops, boats. People don't fall in love with a category page; they fall in love with the maker.*
+
+---
+
+## Step 6: Engineer the Tipping Point
+
+Once your first nucleus is liquid, you have a choice: deepen or replicate.
+
+| Move | When it's right | When it's wrong |
+|------|-----------------|-----------------|
+| **Deepen** the nucleus (add categories, frequency, retention) | Liquidity ≥ 50%, repeat rate climbing, supply is asking for more demand | Liquidity bouncy, supply churn high |
+| **Replicate** to nucleus #2 | Nucleus #1 is boringly liquid for ≥ 8 weeks, you have a playbook | You're hoping a second nucleus will fix the first |
+
+When you do replicate, do not start from zero. The reason atomic networks work is that the playbook transfers:
+
+- The supply-recruitment script you used
+- The onboarding checklist
+- The first content series
+- The specific channels that worked
+- The threshold of "dense enough" before turning on demand
+
+Each replication should be cheaper and faster than the last. If nucleus #3 costs the same as nucleus #1, you don't have a playbook — you have three pilots.
+
+This is also where network effects start to kick in: a producer in nucleus #2 can sell to buyers in nucleus #1 if logistics allow. A buyer who moves cities stays on the platform. Reviews, reputation, and trust transfer. **None of this matters in nucleus #1**, which is why so many founders build for it too early. Build for it after #2 is live.
+
+> **From the field:** *The biggest valuation jump in a marketplace's life isn't the first paying user, the first big month, or even the first profitable cohort. It's the first time you ship the playbook in a new market and it works without the founders flying in. That moment converts a startup into a category.*
+
+---
+
+## A Short Checklist Before You Spend on Marketing
+
+Before any marketing budget goes out the door, answer these honestly:
+
+- [ ] We can name the atomic network in one sentence (geography × category × time).
+- [ ] A first-time buyer landing today would find ≥10 listings they'd actually want.
+- [ ] We know which side is harder and we have a manual recruitment plan for it.
+- [ ] Our north-star metric is liquidity, not GMV, and we report it weekly.
+- [ ] Our time-to-first-transaction for new supply is under 14 days.
+- [ ] We have a written playbook of what worked here, ready to replicate.
+
+If any answer is "no," fix it before you scale spend. Marketing is a multiplier — it makes a working network grow faster, and a broken network die louder.
+
+> **From the field:** *Cold-start is not a marketing problem. It's a sequencing problem with a marketing component. Get the sequence right and modest budgets feel like rocket fuel. Get it wrong and the same money quietly disappears into churn.*
