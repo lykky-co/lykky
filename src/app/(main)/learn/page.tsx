@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   title: 'GTM Knowledge Base — Lykky',
   description:
     'Frameworks, playbooks, templates, and resources to help tech founders build and execute a Go-to-Market strategy.',
+  alternates: { canonical: '/learn' },
 }
 
 const collections = [

@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "Contribute — Lykky",
   description:
     "Learn how to contribute to the open-source GTM knowledge base.",
+  alternates: { canonical: "/contribute" },
 }
 
 const contributionPaths = [

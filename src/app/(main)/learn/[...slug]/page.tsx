@@ -22,13 +22,18 @@ export async function generateMetadata({
   params,
 }: ContentPageProps): Promise<Metadata> {
   const { slug } = await params
+  const path = `/learn/${slug.join('/')}`
 
   // Collection index page (e.g. /learn/playbooks)
   if (slug.length === 1) {
     const collection = getCollectionBySlug(slug[0])
     if (collection) {
       const title = `${collection.label} — Lykky`
-      return { title, description: `Browse all ${collection.label.toLowerCase()} on Lykky.` }
+      return {
+        title,
+        description: `Browse all ${collection.label.toLowerCase()} on Lykky.`,
+        alternates: { canonical: path },
+      }
     }
   }
 
@@ -44,11 +49,13 @@ export async function generateMetadata({
     description: content.description,
     keywords: tags,
     authors: [{ name: author }],
+    alternates: { canonical: path },
     openGraph: {
       title,
       description: content.description,
       type: 'article',
       siteName: 'Lykky',
+      url: path,
       ...(('lastUpdated' in content && content.lastUpdated) && {
         modifiedTime: content.lastUpdated as string,
       }),

@@ -19,9 +19,25 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.lykky.co"),
   title: "Lykky — GTM Toolkit for Nordic Founders",
   description:
     "Open-source go-to-market playbooks, templates, and tools built for Nordic startup founders expanding across the Nordics and into Europe.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: "Lykky",
+    url: "/",
+    title: "Lykky — GTM Toolkit for Nordic Founders",
+    description:
+      "Open-source go-to-market playbooks, templates, and tools built for Nordic startup founders expanding across the Nordics and into Europe.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lykky — GTM Toolkit for Nordic Founders",
+    description:
+      "Open-source go-to-market playbooks, templates, and tools built for Nordic startup founders expanding across the Nordics and into Europe.",
+  },
 };
 
 export default function RootLayout({

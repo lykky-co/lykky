@@ -23,11 +23,13 @@ export async function generateMetadata({
   return {
     title: `${author.name} — Lykky`,
     description: author.bio,
+    alternates: { canonical: `/author/${slug}` },
     openGraph: {
       title: `${author.name} — Lykky`,
       description: author.bio,
       type: 'profile',
       siteName: 'Lykky',
+      url: `/author/${slug}`,
     },
   }
 }
